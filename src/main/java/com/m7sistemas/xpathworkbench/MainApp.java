@@ -11,14 +11,18 @@ import com.m7sistemas.xpathworkbench.service.ConfigService;
 
 public class MainApp extends Application {
 
+    private static MainApp instance;
+    private Scene mainScene;
+
     @Override
     public void start(Stage stage) throws Exception {
+        instance = this; // guarda a instância para acesso posterior
 
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/com/m7sistemas/xpathworkbench/ui/main-view.fxml")
         );
 
-        Scene scene = new Scene(loader.load(), 1200, 700);
+        mainScene = new Scene(loader.load(), 1200, 700);
 
         // ==========================
         // Carregar configuração
@@ -35,6 +39,29 @@ public class MainApp extends Application {
 
         String theme = config.getTheme();
 
+        if ("Light".equalsIgnoreCase(theme)) {
+            applyTheme(mainScene, "Light"); 
+        } else {
+            applyTheme(mainScene, "Dark"); 
+        }
+
+        stage.setTitle("XPathWorkbench");
+        stage.setScene(mainScene);
+        stage.show();
+    }
+
+    public static MainApp getInstance() {
+        return instance;
+    }
+
+    public Scene getScene() {
+        return mainScene;
+    }
+
+    public void applyTheme(Scene scene, String theme) {
+        // Remove CSS anterior
+        scene.getStylesheets().clear();
+
         String cssPath;
         if ("Light".equalsIgnoreCase(theme)) {
             cssPath = "/com/m7sistemas/xpathworkbench/ui/style/light-theme.css";
@@ -42,14 +69,9 @@ public class MainApp extends Application {
             cssPath = "/com/m7sistemas/xpathworkbench/ui/style/dark-theme.css";
         }
 
-        scene.getStylesheets().add(
-            getClass().getResource(cssPath).toExternalForm()
-        );
-
-        stage.setTitle("XPathWorkbench");
-        stage.setScene(scene);
-        stage.show();
+        scene.getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
     }
+
 
     public static void main(String[] args) {
         launch();

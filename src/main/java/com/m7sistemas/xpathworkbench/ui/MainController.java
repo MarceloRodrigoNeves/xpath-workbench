@@ -2,6 +2,7 @@ package com.m7sistemas.xpathworkbench.ui;
 
 import java.io.IOException;
 
+import com.m7sistemas.xpathworkbench.MainApp;
 import com.m7sistemas.xpathworkbench.core.SaxonXPathService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Modality;
-import java.io.IOException;
 
 public class MainController {
 
@@ -61,11 +60,11 @@ public class MainController {
     @FXML
     private void openSettings() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/com/m7sistemas/xpathworkbench/ui/settings-view.fxml")
-            );
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/m7sistemas/xpathworkbench/ui/settings-view.fxml"));
             Parent root = loader.load();
+
+            SettingsController controller = loader.getController();
+            controller.setMainApp(MainApp.getInstance()); // cria método setMainApp(MainApp mainApp) no SettingsController
 
             Stage stage = new Stage();
             stage.setTitle("Configurações");

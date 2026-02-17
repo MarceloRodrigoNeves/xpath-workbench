@@ -2,11 +2,13 @@ package com.m7sistemas.xpathworkbench.ui;
 
 import java.io.IOException;
 
+import com.m7sistemas.xpathworkbench.MainApp;
 import com.m7sistemas.xpathworkbench.model.AppConfig;
 import com.m7sistemas.xpathworkbench.service.ConfigService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.stage.Stage;
 
 public class SettingsController {
 
@@ -14,6 +16,12 @@ public class SettingsController {
     private ComboBox<String> themeComboBox;
 
     private final ConfigService configService = new ConfigService();
+
+    private MainApp mainApp; // referência à aplicação principal
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
 
     @FXML
     public void initialize() {
@@ -40,9 +48,15 @@ public class SettingsController {
 
         try {
             configService.save(config);
-            System.out.println("Configuração salva com sucesso.");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Atualiza tema em tempo real
+        if (this.mainApp != null && selectedTheme != null) {
+            this.mainApp.applyTheme(this.mainApp.getScene(), selectedTheme);
+        }
+
+        ((Stage) themeComboBox.getScene().getWindow()).close();
     }
 }
