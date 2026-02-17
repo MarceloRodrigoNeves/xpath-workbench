@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane
+        xmlns="http://javafx.com/javafx/21"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="com.m7sistemas.xpathworkbench.ui.SettingsController">
+
+    <!-- Margem geral da tela -->
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- ========= FORMULÁRIO ========= -->
+    <center>
+        <GridPane hgap="15" vgap="15">
+
+            <columnConstraints>
+                <!-- Coluna dos labels -->
+                <ColumnConstraints halignment="LEFT" minWidth="100"/>
+                <!-- Coluna dos campos -->
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+
+            <!-- Linha 1 -->
+            <Label text="Tema:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="themeComboBox"
+                      prefWidth="200"
+                      GridPane.rowIndex="0"
+                      GridPane.columnIndex="1"/>
+
+        </GridPane>
+    </center>
+
+    <!-- ========= BOTÃO ========= -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="15"/>
+            </padding>
+
+            <Button text="Salvar"
+                    minWidth="100"
+                    onAction="#saveSettings"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
