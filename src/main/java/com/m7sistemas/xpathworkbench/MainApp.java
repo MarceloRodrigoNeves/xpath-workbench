@@ -16,6 +16,12 @@ public class MainApp extends Application {
 
         Scene scene = new Scene(loader.load(), 1000, 700);
 
+        scene.getStylesheets().add(
+            getClass()
+                .getResource("/com/m7sistemas/xpathworkbench/ui/dark-theme.css")
+                .toExternalForm()
+        );
+
         stage.setTitle("XPathWorkbench");
         stage.setScene(scene);
         stage.show();

@@ -1,0 +1,17 @@
+.root {
+    -fx-base: #4b4b50;
+}
+
+.text-area,
+.text-field {
+    -fx-control-inner-background: #cccccc;
+    -fx-background-color: #cccccc;
+    -fx-highlight-fill: #b3e6ff;
+}
+
+
+.list-view  {
+    -fx-control-inner-background: #e6e6e6;
+    -fx-background-color: #e6e6e6;
+    -fx-highlight-fill: #b3e6ff;
+}
