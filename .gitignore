@@ -1,0 +1,38 @@
+# Maven
+target/
+
+# Logs
+*.log
+
+# IntelliJ
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiled class files
+*.class
+
+# JavaFX build artifacts
+*.jfx
+
+# Temporary files
+*.swp
+*~
