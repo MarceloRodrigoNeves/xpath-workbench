@@ -1,0 +1,603 @@
+[
+  {
+    "name": "concat",
+    "category": "Strings",
+    "description": "Concatena duas ou mais strings.",
+    "model": "fn:concat('Olá', ' ', 'Mundo')",
+    "result": "Olá Mundo"
+  },
+  {
+    "name": "contains",
+    "category": "Strings",
+    "description": "Verifica se uma string contém outra substring.",
+    "model": "fn:contains('Olá Mundo', 'Mundo')",
+    "result": "true"
+  },
+  {
+    "name": "starts-with",
+    "category": "Strings",
+    "description": "Verifica se uma string começa com uma determinada substring.",
+    "model": "fn:starts-with('Olá Mundo', 'Olá')",
+    "result": "true"
+  },
+  {
+    "name": "ends-with",
+    "category": "Strings",
+    "description": "Verifica se uma string termina com uma determinada substring.",
+    "model": "fn:ends-with('Olá Mundo', 'Mundo')",
+    "result": "true"
+  },
+  {
+    "name": "string-length",
+    "category": "Strings",
+    "description": "Retorna o número de caracteres em uma string.",
+    "model": "fn:string-length('Olá')",
+    "result": "3"
+  },
+  {
+    "name": "substring",
+    "category": "Strings",
+    "description": "Retorna uma parte de uma string.",
+    "model": "fn:substring('Olá Mundo', 5, 5)",
+    "result": "Mundo"
+  },
+  {
+    "name": "upper-case",
+    "category": "Strings",
+    "description": "Converte uma string para letras maiúsculas.",
+    "model": "fn:upper-case('Olá Mundo')",
+    "result": "OLÁ MUNDO"
+  },
+  {
+    "name": "lower-case",
+    "category": "Strings",
+    "description": "Converte uma string para letras minúsculas.",
+    "model": "fn:lower-case('Olá Mundo')",
+    "result": "olá mundo"
+  },
+  {
+    "name": "normalize-space",
+    "category": "Strings",
+    "description": "Remove espaços em branco extras do início e do fim de uma string, e substitui sequências de espaços em branco internos por um único espaço.",
+    "model": "fn:normalize-space('  Olá   Mundo  ')",
+    "result": "Olá Mundo"
+  },
+  {
+    "name": "translate",
+    "category": "Strings",
+    "description": "Substitui caracteres em uma string.",
+    "model": "fn:translate('bar', 'abc', 'ABC')",
+    "result": "BAr"
+  },
+  {
+    "name": "round",
+    "category": "Numéricas",
+    "description": "Retorna o número inteiro mais próximo.",
+    "model": "fn:round(3.14)",
+    "result": "3"
+  },
+  {
+    "name": "floor",
+    "category": "Numéricas",
+    "description": "Retorna o maior inteiro menor ou igual ao número.",
+    "model": "fn:floor(3.8)",
+    "result": "3"
+  },
+  {
+    "name": "ceiling",
+    "category": "Numéricas",
+    "description": "Retorna o menor inteiro maior ou igual ao número.",
+    "model": "fn:ceiling(3.14)",
+    "result": "4"
+  },
+  {
+    "name": "abs",
+    "category": "Numéricas",
+    "description": "Retorna o valor absoluto de um número.",
+    "model": "fn:abs(-5)",
+    "result": "5"
+  },
+  {
+    "name": "sum",
+    "category": "Numéricas",
+    "description": "Retorna a soma dos valores numéricos de cada nó em um conjunto de nós.",
+    "model": "fn:sum((10, 20, 30))",
+    "result": "60"
+  },
+  {
+    "name": "avg",
+    "category": "Numéricas",
+    "description": "Retorna a média dos valores em uma sequência.",
+    "model": "fn:avg((10, 20, 30))",
+    "result": "20"
+  },
+  {
+    "name": "true",
+    "category": "Booleanas",
+    "description": "Retorna o valor booleano 'true'.",
+    "model": "fn:true()",
+    "result": "true"
+  },
+  {
+    "name": "false",
+    "category": "Booleanas",
+    "description": "Retorna o valor booleano 'false'.",
+    "result": "false"
+  },
+  {
+    "name": "not",
+    "category": "Booleanas",
+    "description": "Nega um valor booleano.",
+    "model": "fn:not(fn:true())",
+    "result": "false"
+  },
+  {
+    "name": "empty",
+    "category": "Booleanas",
+    "description": "Retorna 'true' se a sequência estiver vazia.",
+    "model": "fn:empty(())",
+    "result": "true"
+  },
+  {
+    "name": "exists",
+    "category": "Booleanas",
+    "description": "Retorna 'true' se a sequência não estiver vazia.",
+    "model": "fn:exists((1, 2))",
+    "result": "true"
+  },
+  {
+    "name": "count",
+    "category": "Conjunto de Nós",
+    "description": "Conta o número de nós em um conjunto de nós.",
+    "model": "fn:count(//book)",
+    "result": "2"
+  },
+  {
+    "name": "position",
+    "category": "Conjunto de Nós",
+    "description": "Retorna a posição do nó de contexto (baseado em 1).",
+    "model": "//item[fn:position() = 1]",
+    "result": "primeiro item"
+  },
+  {
+    "name": "last",
+    "category": "Conjunto de Nós",
+    "description": "Retorna o tamanho do contexto (a posição do último item).",
+    "model": "//item[fn:position() = fn:last()]",
+    "result": "último item"
+  },
+  {
+    "name": "name",
+    "category": "Conjunto de Nós",
+    "description": "Retorna o nome qualificado (QName) do primeiro nó em um conjunto de nós.",
+    "model": "fn:name(/root)",
+    "result": "root"
+  },
+  {
+    "name": "local-name",
+    "category": "Conjunto de Nós",
+    "description": "Retorna o nome local do primeiro nó em um conjunto de nós.",
+    "model": "fn:local-name(/root)",
+    "result": "root"
+  },
+  {
+    "name": "namespace-uri",
+    "category": "Conjunto de Nós",
+    "description": "Retorna o URI do namespace do primeiro nó em um conjunto de nós.",
+    "model": "fn:namespace-uri(/root)",
+    "result": ""
+  },
+  {
+    "name": "id",
+    "category": "Conjunto de Nós",
+    "description": "Encontra nós que correspondem aos IDs fornecidos.",
+    "model": "fn:id('chapter1')",
+    "result": "elemento com id='chapter1'"
+  },
+  {
+    "name": "lang",
+    "category": "Conjunto de Nós",
+    "description": "Determina se o nó de contexto corresponde ao idioma fornecido.",
+    "model": "//book[fn:lang('en')]",
+    "result": "livros com atributo xml:lang='en'"
+  },
+  {
+    "name": "distinct-values",
+    "category": "Sequência",
+    "description": "Retorna os valores distintos em uma sequência.",
+    "model": "fn:distinct-values(('a', 'b', 'a'))",
+    "result": "('a', 'b')"
+  },
+  {
+    "name": "insert-before",
+    "category": "Sequência",
+    "description": "Insere um item em uma sequência em uma posição específica.",
+    "model": "fn:insert-before((1, 2, 3), 2, 99)",
+    "result": "(1, 99, 2, 3)"
+  },
+  {
+    "name": "remove",
+    "category": "Sequência",
+    "description": "Remove um item de uma sequência em uma posição específica.",
+    "model": "fn:remove((1, 2, 3), 2)",
+    "result": "(1, 3)"
+  },
+  {
+    "name": "subsequence",
+    "category": "Sequência",
+    "description": "Retorna uma subsequência de uma sequência.",
+    "model": "fn:subsequence((1, 2, 3, 4, 5), 2, 3)",
+    "result": "(2, 3, 4)"
+  },
+  {
+    "name": "reverse",
+    "category": "Sequência",
+    "description": "Retorna uma sequência com a ordem dos itens invertida.",
+    "model": "fn:reverse((1, 2, 3))",
+    "result": "(3, 2, 1)"
+  },
+  {
+    "name": "current-date",
+    "category": "Data e Hora",
+    "description": "Retorna a data atual.",
+    "model": "fn:current-date()",
+    "result": "2026-02-17"
+  },
+  {
+    "name": "current-time",
+    "category": "Data e Hora",
+    "description": "Retorna a hora atual.",
+    "model": "fn:current-time()",
+    "result": "HH:MM:SS.sssZ"
+  },
+  {
+    "name": "current-dateTime",
+    "category": "Data e Hora",
+    "description": "Retorna a data e hora atuais.",
+    "model": "fn:current-dateTime()",
+    "result": "2026-02-17T...Z"
+  },
+  {
+    "name": "year-from-date",
+    "category": "Data e Hora",
+    "description": "Extrai o ano de um valor de data.",
+    "model": "fn:year-from-date(xs:date('2023-01-15'))",
+    "result": "2023"
+  },
+  {
+    "name": "month-from-date",
+    "category": "Data e Hora",
+    "description": "Extrai o mês de um valor de data.",
+    "model": "fn:month-from-date(xs:date('2023-01-15'))",
+    "result": "1"
+  },
+  {
+    "name": "day-from-date",
+    "category": "Data e Hora",
+    "description": "Extrai o dia de um valor de data.",
+    "model": "fn:day-from-date(xs:date('2023-01-15'))",
+    "result": "15"
+  },
+  {
+    "name": "hours-from-time",
+    "category": "Data e Hora",
+    "description": "Extrai as horas de um valor de hora.",
+    "model": "fn:hours-from-time(xs:time('14:30:00'))",
+    "result": "14"
+  },
+  {
+    "name": "minutes-from-time",
+    "category": "Data e Hora",
+    "description": "Extrai os minutos de um valor de hora.",
+    "model": "fn:minutes-from-time(xs:time('14:30:00'))",
+    "result": "30"
+  },
+  {
+    "name": "seconds-from-time",
+    "category": "Data e Hora",
+    "description": "Extrai os segundos de um valor de hora.",
+    "model": "fn:seconds-from-time(xs:time('14:30:45.123'))",
+    "result": "45.123"
+  },
+  {
+    "name": "adjust-date-to-timezone",
+    "category": "Data e Hora",
+    "description": "Ajusta um valor de data para um fuso horário específico.",
+    "model": "fn:adjust-date-to-timezone(xs:date('2023-01-15'), xs:dayTimeDuration('PT5H'))",
+    "result": "2023-01-15+05:00"
+  },
+  {
+    "name": "matches",
+    "category": "Expressão Regular",
+    "description": "Verifica se uma string corresponde a um padrão de expressão regular.",
+    "model": "fn:matches('abc123def', '[0-9]+')",
+    "result": "true"
+  },
+  {
+    "name": "replace",
+    "category": "Expressão Regular",
+    "description": "Substitui todas as ocorrências de um padrão de expressão regular em uma string.",
+    "model": "fn:replace('abc123def', '[0-9]+', 'XYZ')",
+    "result": "abcXYZdef"
+  },
+  {
+    "name": "tokenize",
+    "category": "Expressão Regular",
+    "description": "Divide uma string em uma sequência de strings usando um padrão de expressão regular como delimitador.",
+    "model": "fn:tokenize('um,dois,três', ',')",
+    "result": "('um', 'dois', 'três')"
+  },
+  {
+    "name": "document",
+    "category": "Contexto",
+    "description": "Encontra um conjunto de nós em um documento externo.",
+    "model": "fn:document('data.xml')//item",
+    "result": "nós 'item' do documento data.xml"
+  },
+  {
+    "name": "collection",
+    "category": "Contexto",
+    "description": "Retorna uma sequência de nós de uma coleção de documentos.",
+    "model": "fn:collection('http://example.com/collection')",
+    "result": "sequência de nós da coleção"
+  },
+  {
+    "name": "system-property",
+    "category": "Contexto",
+    "description": "Retorna um objeto que representa a propriedade do sistema fornecida.",
+    "model": "fn:system-property('xsl:version')",
+    "result": "2.0"
+  },
+  {
+    "name": "ancestor",
+    "category": "Eixos XPath",
+    "description": "Seleciona todos os nós ancestrais do nó de contexto (pai, avô, etc.).",
+    "model": "/root/child1/element/ancestor::*",
+    "result": "root, child1"
+  },
+  {
+    "name": "ancestor-or-self",
+    "category": "Eixos XPath",
+    "description": "Seleciona o nó de contexto e todos os seus ancestrais.",
+    "model": "/root/child1/element/ancestor-or-self::*",
+    "result": "root, child1, element"
+  },
+  {
+    "name": "attribute",
+    "category": "Eixos XPath",
+    "description": "Seleciona os atributos do nó de contexto. Pode ser abreviado como '@'.",
+    "model": "/root/element/@id",
+    "result": "valor do atributo 'id'"
+  },
+  {
+    "name": "child",
+    "category": "Eixos XPath",
+    "description": "Seleciona os nós filhos do nó de contexto. É o eixo padrão e pode ser omitido.",
+    "model": "/root/child::element",
+    "result": "elementos filhos 'element' de 'root'"
+  },
+  {
+    "name": "descendant",
+    "category": "Eixos XPath",
+    "description": "Seleciona todos os nós descendentes do nó de contexto (filhos, netos, etc.).",
+    "model": "/root/descendant::*",
+    "result": "todos os descendentes de 'root'"
+  },
+  {
+    "name": "descendant-or-self",
+    "category": "Eixos XPath",
+    "description": "Seleciona o nó de contexto e todos os seus descendentes.",
+    "model": "/root/descendant-or-self::*",
+    "result": "root e todos os seus descendentes"
+  },
+  {
+    "name": "following",
+    "category": "Eixos XPath",
+    "description": "Seleciona todos os nós que aparecem depois do nó de contexto na ordem do documento, exceto os descendentes, atributos e namespaces.",
+    "model": "//nodeA/following::nodeB",
+    "result": "todos os 'nodeB' depois de 'nodeA'"
+  },
+  {
+    "name": "following-sibling",
+    "category": "Eixos XPath",
+    "description": "Seleciona todos os nós irmãos que aparecem depois do nó de contexto.",
+    "model": "//item[3]/following-sibling::item",
+    "result": "todos os 'item' irmãos depois do terceiro item"
+  },
+  {
+    "name": "namespace",
+    "category": "Eixos XPath",
+    "description": "Seleciona os nós de namespace do nó de contexto.",
+    "model": "/root/namespace::*",
+    "result": "todos os namespaces declarados em 'root'"
+  },
+  {
+    "name": "parent",
+    "category": "Eixos XPath",
+    "description": "Seleciona o nó pai do nó de contexto. Pode ser abreviado como '..'.",
+    "model": "/root/child1/element/parent::*",
+    "result": "element"
+  },
+  {
+    "name": "preceding",
+    "category": "Eixos XPath",
+    "description": "Seleciona todos os nós que aparecem antes do nó de contexto na ordem do documento, exceto os ancestrais, atributos e namespaces.",
+    "model": "//nodeA/preceding::nodeB",
+    "result": "todos os 'nodeB' antes de 'nodeA'"
+  },
+  {
+    "name": "preceding-sibling",
+    "category": "Eixos XPath",
+    "description": "Seleciona todos os nós irmãos que aparecem antes do nó de contexto.",
+    "model": "//item[3]/preceding-sibling::item",
+    "result": "todos os 'item' irmãos antes do terceiro item"
+  },
+  {
+    "name": "self",
+    "category": "Eixos XPath",
+    "description": "Seleciona o próprio nó de contexto. Pode ser abreviado como '.'.",
+    "model": "/root/child1/element/self::*",
+    "result": "element"
+  },
+  {
+    "name": "+",
+    "category": "Operadores XPath",
+    "description": "Adição de valores numéricos.",
+    "model": "10 + 5",
+    "result": "15"
+  },
+  {
+    "name": "-",
+    "category": "Operadores XPath",
+    "description": "Subtração de valores numéricos.",
+    "model": "10 - 5",
+    "result": "5"
+  },
+  {
+    "name": "*",
+    "category": "Operadores XPath",
+    "description": "Multiplicação de valores numéricos.",
+    "model": "10 * 5",
+    "result": "50"
+  },
+  {
+    "name": "div",
+    "category": "Operadores XPath",
+    "description": "Divisão de valores numéricos (retorna um decimal).",
+    "model": "10 div 4",
+    "result": "2.5"
+  },
+  {
+    "name": "idiv",
+    "category": "Operadores XPath",
+    "description": "Divisão inteira (retorna apenas a parte inteira).",
+    "model": "10 idiv 4",
+    "result": "2"
+  },
+  {
+    "name": "mod",
+    "category": "Operadores XPath",
+    "description": "Operador de módulo (resto da divisão).",
+    "model": "10 mod 3",
+    "result": "1"
+  },
+  {
+    "name": "=",
+    "category": "Operadores XPath",
+    "description": "Comparação de igualdade.",
+    "model": "10 = 10",
+    "result": "true"
+  },
+  {
+    "name": "!=",
+    "category": "Operadores XPath",
+    "description": "Comparação de diferença.",
+    "model": "10 != 5",
+    "result": "true"
+  },
+  {
+    "name": "<",
+    "category": "Operadores XPath",
+    "description": "Comparação 'menor que'.",
+    "model": "5 < 10",
+    "result": "true"
+  },
+  {
+    "name": "<=",
+    "category": "Operadores XPath",
+    "description": "Comparação 'menor ou igual a'.",
+    "model": "5 <= 5",
+    "result": "true"
+  },
+  {
+    "name": ">",
+    "category": "Operadores XPath",
+    "description": "Comparação 'maior que'.",
+    "model": "10 > 5",
+    "result": "true"
+  },
+  {
+    "name": ">=",
+    "category": "Operadores XPath",
+    "description": "Comparação 'maior ou igual a'.",
+    "model": "10 >= 10",
+    "result": "true"
+  },
+  {
+    "name": "and",
+    "category": "Operadores XPath",
+    "description": "Operador lógico AND.",
+    "model": "true() and false()",
+    "result": "false"
+  },
+  {
+    "name": "or",
+    "category": "Operadores XPath",
+    "description": "Operador lógico OR.",
+    "model": "true() or false()",
+    "result": "true"
+  },
+  {
+    "name": "union",
+    "category": "Operadores XPath",
+    "description": "Une duas sequências (remove duplicatas).",
+    "model": "(1,2) union (2,3)",
+    "result": "(1, 2, 3)"
+  },
+  {
+    "name": "intersect",
+    "category": "Operadores XPath",
+    "description": "Retorna a interseção de duas sequências.",
+    "model": "(1,2,3) intersect (2,4)",
+    "result": "(2)"
+  },
+  {
+    "name": "except",
+    "category": "Operadores XPath",
+    "description": "Retorna a sequência 1 menos os itens que também estão na sequência 2.",
+    "model": "(1,2,3) except (2,4)",
+    "result": "(1, 3)"
+  },
+  {
+    "name": "to",
+    "category": "Operadores XPath",
+    "description": "Cria uma sequência de números inteiros dentro de um intervalo.",
+    "model": "1 to 5",
+    "result": "(1, 2, 3, 4, 5)"
+  },
+  {
+    "name": "|",
+    "category": "Operadores XPath",
+    "description": "União de caminhos (seleciona nós que satisfazem qualquer um dos caminhos).",
+    "model": "//book | //cd",
+    "result": "todos os elementos <book> e <cd>"
+  },
+  {
+    "name": "node()",
+    "category": "Tipos de Nós XPath",
+    "description": "Seleciona qualquer tipo de nó (elemento, atributo, texto, comentário, instrução de processamento).",
+    "model": "/root/child::node()",
+    "result": "todos os nós filhos de 'root'"
+  },
+  {
+    "name": "text()",
+    "category": "Tipos de Nós XPath",
+    "description": "Seleciona nós de texto.",
+    "model": "/root/element/text()",
+    "result": "o conteúdo de texto do 'element'"
+  },
+  {
+    "name": "comment()",
+    "category": "Tipos de Nós XPath",
+    "description": "Seleciona nós de comentário.",
+    "model": "/root/comment()",
+    "result": "todos os comentários dentro de 'root'"
+  },
+  {
+    "name": "processing-instruction()",
+    "category": "Tipos de Nós XPath",
+    "description": "Seleciona nós de instrução de processamento.",
+    "model": "/root/processing-instruction()",
+    "result": "todas as instruções de processamento dentro de 'root'"
+  }
+]

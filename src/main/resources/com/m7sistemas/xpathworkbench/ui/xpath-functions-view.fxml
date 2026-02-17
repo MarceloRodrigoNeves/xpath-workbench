@@ -14,12 +14,14 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <TableView fx:id="functionTable" prefHeight="400" prefWidth="800">
+    <TextField fx:id="searchField" promptText="Digite nome ou descrição da função..." />
+    <TableView fx:id="functionTable">
         <columns>
-            <TableColumn fx:id="functionCol" text="Função" prefWidth="150"/>
-            <TableColumn fx:id="descriptionCol" text="Descrição" prefWidth="250"/>
-            <TableColumn fx:id="modelCol" text="Modelo" prefWidth="200"/>
-            <TableColumn fx:id="resultCol" text="Resultado" prefWidth="150"/>
+            <TableColumn text="Categoria" fx:id="categoryCol"/>
+            <TableColumn text="Nome" fx:id="nameCol"/>
+            <TableColumn text="Descrição" fx:id="descriptionCol"/>
+            <TableColumn text="Modelo" fx:id="modelCol"/>
+            <TableColumn text="Resultado" fx:id="resultCol"/>
         </columns>
     </TableView>
 
