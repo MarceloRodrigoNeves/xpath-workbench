@@ -1,0 +1,9 @@
+{
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "/home/marcelo/.sdkman/candidates/java/21.0.1-tem",
+            "default": true
+        }
+    ]
+}
