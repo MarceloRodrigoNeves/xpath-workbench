@@ -80,7 +80,6 @@ public class MainController {
             // Define dono (janela principal)
             stage.initOwner(xpathField.getScene().getWindow());
 
-            stage.setResizable(false);
             stage.showAndWait();
 
         } catch (IOException e) {
@@ -100,7 +99,7 @@ public class MainController {
 
             Stage stage = new Stage();
             stage.setTitle("Funções disponíveis no xpath 2.0");
-            Scene scene = new Scene(root, 800, 500); // largura, altura
+            Scene scene = new Scene(root, 1400, 500); // largura, altura
             stage.setResizable(true);
             stage.setScene(scene);
 
@@ -110,7 +109,6 @@ public class MainController {
             // Define dono (janela principal)
             stage.initOwner(xpathField.getScene().getWindow());
 
-            stage.setResizable(false);
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
