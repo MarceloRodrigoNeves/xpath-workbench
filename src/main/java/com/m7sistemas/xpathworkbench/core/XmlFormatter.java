@@ -57,9 +57,7 @@ public class XmlFormatter {
             Node child = children.item(i);
             if (child.getNodeType() == Node.TEXT_NODE) {
                 String text = child.getTextContent().trim();
-                if (!text.isEmpty()) {
-                    child.setTextContent(text); // remove quebras e espaços extras
-                }
+                child.setTextContent(text); // remove quebras e espaços extras
             } else if (child.getNodeType() == Node.ELEMENT_NODE) {
                 normalizeTextNodes(child); // recursivo
             }
