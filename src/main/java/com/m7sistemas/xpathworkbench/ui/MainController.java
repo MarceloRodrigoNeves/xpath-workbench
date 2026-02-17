@@ -55,6 +55,13 @@ public class MainController {
             }
         });
 
+        // Atalho de tela 'Ctrl + Shift + f' para formatar xml
+        xmlArea.setOnKeyPressed(event -> {
+            if (event.isControlDown() && event.isShiftDown() && event.getCode() == KeyCode.F) {
+                formatXml();
+            }
+        });
+
     }
 
     @FXML
@@ -111,6 +118,34 @@ public class MainController {
 
             stage.showAndWait();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void formatXml() {
+        try {
+            String originalXml = xmlArea.getText();
+            if (originalXml == null || originalXml.isBlank()) {
+                resultList.getItems().clear();
+                resultList.getItems().add("XML vazio. Nada a formatar.");
+                return;
+            }
+
+            // Usa a classe XmlFormatter que você implementou
+            String formattedXml = com.m7sistemas.xpathworkbench.core.XmlFormatter.format(originalXml);
+
+            // Atualiza o TextArea
+            xmlArea.setText(formattedXml);
+
+            // Limpa mensagens de resultado
+            resultList.getItems().clear();
+            resultList.getItems().add("XML formatado com sucesso!");
+
+        } catch (Exception e) {
+            // Mostra erro no ListView
+            resultList.getItems().clear();
+            resultList.getItems().add("Erro ao formatar XML: " + e.getMessage());
             e.printStackTrace();
         }
     }

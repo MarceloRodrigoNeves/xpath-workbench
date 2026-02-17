@@ -6,6 +6,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.m7sistemas.xpathworkbench.ui.MainController">
 
@@ -15,10 +18,19 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
-            <MenuButton text="⋯">
+            <MenuButton fx:id="menuButton">
+                <graphic>
+                    <ImageView fitWidth="16" fitHeight="16" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@/com/m7sistemas/xpathworkbench/icons/menu.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
                 <items>
                     <MenuItem text="Configurações" onAction="#openSettings"/>
                     <MenuItem text="Funções XPath 2.0" onAction="#openXPathFunctions"/>
+                    <SeparatorMenuItem/>
+                    <MenuItem text="Formatar XML (Ctrl + Shift + F)" onAction="#formatXml"/>
                 </items>
             </MenuButton>
 
