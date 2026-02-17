@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public class MainController {
 
@@ -36,4 +37,16 @@ public class MainController {
             resultList.getItems().add("Erro: " + e.getMessage());
         }
     }
+
+    @FXML
+    public void initialize() {
+        // Atalho de tela 'Ctrl + Enter' para executar
+        xpathField.setOnKeyPressed(event -> {
+            if (event.isControlDown() && event.getCode() == KeyCode.ENTER) {
+                onExecute();
+            }
+        });
+
+    }
+
 }

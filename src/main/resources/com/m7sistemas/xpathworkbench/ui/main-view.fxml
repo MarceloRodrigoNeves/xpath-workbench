@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
@@ -13,7 +14,11 @@
             </padding>
 
             <TextField fx:id="xpathField" promptText="Digite o XPath aqui..." HBox.hgrow="ALWAYS"/>
-            <Button text="Executar" onAction="#onExecute"/>
+            <Button text="Executar" onAction="#onExecute">
+                <tooltip>
+                    <Tooltip text="Atalho: Ctrl + Enter"/>
+                </tooltip>
+            </Button>
         </HBox>
     </top>
 
