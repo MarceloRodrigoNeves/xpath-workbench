@@ -50,6 +50,7 @@
         <ListView fx:id="resultList"/>
         </SplitPane>
     </center>
+
     <bottom>
         <Label text="Desenvolvido por: Marcelo R. Neves | contato: marcelo.m7.sistemas@gmail.com | v1.0"
                style="-fx-font-size: 10px;"

@@ -1,6 +1,7 @@
 package com.m7sistemas.xpathworkbench;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -46,6 +47,9 @@ public class MainApp extends Application {
         }
 
         stage.setTitle("XPathWorkbench");
+        // Adiciona o ícone da aplicação
+        Image icon = new Image(getClass().getResourceAsStream("/com/m7sistemas/xpathworkbench/icons/icone.png"));
+        stage.getIcons().add(icon);
         stage.setScene(mainScene);
         stage.show();
     }
