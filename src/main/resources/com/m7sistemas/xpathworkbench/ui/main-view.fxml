@@ -10,9 +10,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import org.fxmisc.richtext.CodeArea?>
+<?import javafx.scene.layout.VBox?>
 
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.m7sistemas.xpathworkbench.ui.MainController">
+
+<BorderPane fx:id="rootPane" xmlns:fx="http://javafx.com/fxml" fx:controller="com.m7sistemas.xpathworkbench.ui.MainController">
 
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT">
@@ -48,7 +51,9 @@
 
     <center>
         <SplitPane>
-            <TextArea fx:id="xmlArea" promptText="Cole o XML aqui..."/>
+            <VBox fx:id="editorContainer">
+                <CodeArea fx:id="xmlArea"/>
+            </VBox>
             <VBox>
                 <ListView fx:id="resultList" VBox.vgrow="ALWAYS"/>
                 <fx:define>

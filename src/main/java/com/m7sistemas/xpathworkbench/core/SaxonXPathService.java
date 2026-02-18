@@ -3,8 +3,6 @@ package com.m7sistemas.xpathworkbench.core;
 import net.sf.saxon.s9api.*;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SaxonXPathService {
 
@@ -12,6 +10,7 @@ public class SaxonXPathService {
 
         Processor processor = new Processor(false);
         DocumentBuilder builder = processor.newDocumentBuilder();
+        builder.setLineNumbering(true);
         XdmNode document = builder.build(new StreamSource(new StringReader(xml)));
 
         XPathCompiler compiler = processor.newXPathCompiler();

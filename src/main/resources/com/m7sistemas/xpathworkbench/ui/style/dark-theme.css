@@ -1,17 +1,74 @@
 .root {
-    -fx-base: #4b4b50;
+    -fx-base: #2b2b2b;
 }
 
-.text-area,
 .text-field {
     -fx-control-inner-background: #cccccc;
     -fx-background-color: #cccccc;
     -fx-highlight-fill: #b3e6ff;
 }
 
+/* Fundo da coluna de números */
+.code-area .lineno {
+    -fx-background-color: #b3b3b3;
+}
+
+.code-area {
+    -fx-background-color: #cccccc;
+}
+
+.code-area .content {
+    -fx-background-color: #cccccc;
+}
+
+.code-area {
+    -fx-highlight-fill: #b3e6ff;
+    /*
+    -fx-highlight-text-fill: white;
+    */
+}
+
+.styled-text-area {
+    -fx-text-fill: #e6e6e6;
+}
 
 .list-view  {
     -fx-control-inner-background: #e6e6e6;
     -fx-background-color: #e6e6e6;
     -fx-highlight-fill: #b3e6ff;
+}
+
+.tag {
+    -fx-fill: #1a73e8;
+}
+
+.attribute {
+    -fx-fill: #e37400;
+}
+
+.value {
+    -fx-fill: #008000;
+}
+
+.highlight-line {
+    -fx-background-color: #fff59d;
+}
+
+/* Fundo da trilha (track) */
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
+    -fx-background-color: #e6e6e6;   /* mais claro */
+}
+
+/* Parte arrastável (thumb) */
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #bfbfbf;   /* cinza médio */
+    -fx-background-radius: 5px;
+}
+
+/* Hover do thumb */
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #a6a6a6;
 }

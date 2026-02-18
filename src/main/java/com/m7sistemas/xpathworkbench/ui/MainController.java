@@ -4,13 +4,15 @@ import java.io.IOException;
 
 import com.m7sistemas.xpathworkbench.MainApp;
 import com.m7sistemas.xpathworkbench.core.SaxonXPathService;
+
+import java.util.Collections;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
@@ -19,12 +21,27 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import net.sf.saxon.s9api.*;
 import java.io.StringWriter;
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
+import java.util.regex.Pattern;
+import java.util.Collection;
+import java.util.regex.Matcher;
+import org.fxmisc.richtext.model.StyleSpansBuilder;
+import javafx.util.Duration;
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.Priority;
+
 
 
 public class MainController {
 
     @FXML
-    private TextArea xmlArea;
+    private VBox editorContainer;
+
+    @FXML
+    private CodeArea xmlArea;
 
     @FXML
     private TextField xpathField;
@@ -43,6 +60,13 @@ public class MainController {
     @FXML
     private ToggleGroup resultModeGroup;
 
+    private static final Pattern XML_TAG =
+        Pattern.compile(
+                "(</?\\h*\\w+)|" +          // abertura tag
+                "(</?\\h*\\w+\\h*/>)|" +    // tag vazia
+                "(\\h+\\w+\\h*=)|" +        // atributo
+                "(\"[^\"]*\")"              // valor atributo
+        );
 
     @FXML
     private void onExecute() {
@@ -82,6 +106,12 @@ public class MainController {
     @FXML
     public void initialize() {
 
+        VirtualizedScrollPane<CodeArea> scrollPane = new VirtualizedScrollPane<>(xmlArea);
+
+        // Coloca o ScrollPane
+        editorContainer.getChildren().setAll(scrollPane);
+        VBox.setVgrow(scrollPane, javafx.scene.layout.Priority.ALWAYS);
+
         textModeButton.setToggleGroup(resultModeGroup);
         nodeModeButton.setToggleGroup(resultModeGroup);
 
@@ -91,6 +121,12 @@ public class MainController {
                 onExecute();
             }
         });
+
+        xmlArea.setParagraphGraphicFactory(LineNumberFactory.get(xmlArea));
+
+        xmlArea.textProperty().addListener((obs, oldText, newText) ->
+            applyHighlighting(newText)
+        );
 
         // Atalho de tela 'Ctrl + Shift + f' para formatar xml
         xmlArea.setOnKeyPressed(event -> {
@@ -197,7 +233,7 @@ public class MainController {
             String formattedXml = com.m7sistemas.xpathworkbench.core.XmlFormatter.format(originalXml);
 
             // Atualiza o TextArea
-            xmlArea.setText(formattedXml);
+            xmlArea.replaceText(formattedXml);
 
             // Limpa mensagens de resultado
             resultList.getItems().clear();
@@ -222,6 +258,56 @@ public class MainController {
 
         return writer.toString();
     }
-    
+
+    private void applyHighlighting(String text) {
+
+        Matcher matcher = XML_TAG.matcher(text);
+        int lastKwEnd = 0;
+
+        StyleSpansBuilder<Collection<String>> spansBuilder =
+                new StyleSpansBuilder<>();
+
+        while (matcher.find()) {
+
+            spansBuilder.add(Collections.emptyList(),
+                    matcher.start() - lastKwEnd);
+
+            if (matcher.group(1) != null) {
+                spansBuilder.add(Collections.singleton("tag"), matcher.end() - matcher.start());
+            } else if (matcher.group(3) != null) {
+                spansBuilder.add(Collections.singleton("attribute"), matcher.end() - matcher.start());
+            } else if (matcher.group(4) != null) {
+                spansBuilder.add(Collections.singleton("value"), matcher.end() - matcher.start());
+            }
+
+            lastKwEnd = matcher.end();
+        }
+
+        spansBuilder.add(Collections.emptyList(),
+                text.length() - lastKwEnd);
+
+        xmlArea.setStyleSpans(0, spansBuilder.create());
+    }
+
+    private void highlightNodeInXml(XdmNode node) {
+
+        int line = node.getUnderlyingNode().getLineNumber();
+
+        if (line > 0) {
+
+            int paragraph = line - 1;
+
+            xmlArea.showParagraphAtCenter(paragraph);
+
+            xmlArea.setParagraphStyle(paragraph,
+                    Collections.singleton("highlight-line"));
+
+            // Remove highlight após 2 segundos
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(e ->
+                    xmlArea.clearParagraphStyle(paragraph));
+            pause.play();
+        }
+    }
 
 }
