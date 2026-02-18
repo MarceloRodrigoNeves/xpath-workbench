@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -98,6 +99,30 @@ public class MainController {
             }
         });
 
+        // Destaque na linha do resultado que o cursor do mouse passa por sima
+        resultList.setCellFactory(list -> {
+            ListCell<String> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+
+            cell.setOnMouseEntered(e -> {
+                if (!cell.isEmpty()) {
+                    cell.setStyle("-fx-background-color: #d0e7ff;");
+                }
+            });
+
+            cell.setOnMouseExited(e -> {
+                if (!cell.isEmpty()) {
+                    cell.setStyle("");
+                }
+            });
+
+            return cell;
+        });
     }
 
     @FXML
