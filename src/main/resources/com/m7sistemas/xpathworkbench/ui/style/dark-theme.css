@@ -23,9 +23,6 @@
 
 .code-area {
     -fx-highlight-fill: #b3e6ff;
-    /*
-    -fx-highlight-text-fill: white;
-    */
 }
 
 .styled-text-area {
@@ -71,4 +68,8 @@
 .scroll-bar:vertical .thumb:hover,
 .scroll-bar:horizontal .thumb:hover {
     -fx-background-color: #a6a6a6;
+}
+
+.active-paragraph {
+    -fx-background-color: #b3b3b3
 }

@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import com.m7sistemas.xpathworkbench.MainApp;
 import com.m7sistemas.xpathworkbench.core.SaxonXPathService;
+import com.m7sistemas.xpathworkbench.model.PositionedNode;
 
 import java.util.Collections;
+
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,10 +31,7 @@ import java.util.regex.Matcher;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import javafx.util.Duration;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.Priority;
-
 
 
 public class MainController {
@@ -47,7 +46,7 @@ public class MainController {
     private TextField xpathField;
 
     @FXML
-    private ListView<String> resultList;
+    private ListView<PositionedNode> resultList;
 
     private final SaxonXPathService xpathService = new SaxonXPathService();
 
@@ -83,22 +82,27 @@ public class MainController {
             boolean isTextMode = textModeButton.isSelected();
 
             for (XdmItem item : results) {
+                if (item instanceof XdmNode xdmNode) {
+                    int line = xdmNode.getUnderlyingNode().getLineNumber();
+                    int column = xdmNode.getUnderlyingNode().getColumnNumber();
+                    String display;
 
-                if (isTextMode) {
-                    resultList.getItems().add(item.getStringValue());
-                } else {
-
-                    if (item instanceof XdmNode node) {
-                        resultList.getItems().add(serializeNode(node));
+                    if (textModeButton.isSelected()) {
+                        display = xdmNode.getStringValue();
                     } else {
-                        resultList.getItems().add(item.getStringValue());
+                        display = serializeNode(xdmNode);
                     }
-
+                    PositionedNode positioned = new PositionedNode(null, line, column, display);
+                    resultList.getItems().add(positioned);
+                } else {
+                    PositionedNode positioned =  new PositionedNode(null, 1, 1, item.getStringValue());
+                    resultList.getItems().add(positioned);
                 }
             }
 
         } catch (Exception e) {
-            resultList.getItems().add("Erro: " + e.getMessage());
+            PositionedNode positioned =  new PositionedNode(null, 1, 1, "Erro: " + e.getMessage());
+            resultList.getItems().add(positioned);
         }
     }
 
@@ -128,6 +132,19 @@ public class MainController {
             applyHighlighting(newText)
         );
 
+        xmlArea.currentParagraphProperty().addListener((obs, oldPar, newPar) -> {
+
+            if (oldPar != null) {
+                xmlArea.setParagraphStyle(oldPar, Collections.emptyList());
+            }
+
+            if (newPar != null) {
+                xmlArea.setParagraphStyle(newPar,
+                        Collections.singleton("active-paragraph"));
+            }
+        });
+
+
         // Atalho de tela 'Ctrl + Shift + f' para formatar xml
         xmlArea.setOnKeyPressed(event -> {
             if (event.isControlDown() && event.isShiftDown() && event.getCode() == KeyCode.F) {
@@ -137,11 +154,11 @@ public class MainController {
 
         // Destaque na linha do resultado que o cursor do mouse passa por sima
         resultList.setCellFactory(list -> {
-            ListCell<String> cell = new ListCell<>() {
+            ListCell<PositionedNode> cell = new ListCell<>() {
                 @Override
-                protected void updateItem(String item, boolean empty) {
+                protected void updateItem(PositionedNode item, boolean empty) {
                     super.updateItem(item, empty);
-                    setText(empty ? null : item);
+                    setText(empty || item == null ? null : item.toString());
                 }
             };
 
@@ -159,6 +176,24 @@ public class MainController {
 
             return cell;
         });
+
+
+        resultList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                PositionedNode selected = resultList.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    int offset = toOffset(xmlArea, selected.getLine(), selected.getColumn());
+                    xmlArea.moveTo(offset);
+                    xmlArea.requestFocus();
+                    //xmlArea.requestFollowCaret();
+
+                    // força scroll
+                    int paragraph = selected.getLine() - 1;
+                    xmlArea.showParagraphAtCenter(paragraph);
+                }
+            }
+        });
+
     }
 
     @FXML
@@ -225,7 +260,9 @@ public class MainController {
             String originalXml = xmlArea.getText();
             if (originalXml == null || originalXml.isBlank()) {
                 resultList.getItems().clear();
-                resultList.getItems().add("XML vazio. Nada a formatar.");
+                resultList.getItems().add(
+                    new PositionedNode(null, 1, 1, "XML vazio. Nada a formatar.")
+                );
                 return;
             }
 
@@ -237,12 +274,16 @@ public class MainController {
 
             // Limpa mensagens de resultado
             resultList.getItems().clear();
-            resultList.getItems().add("XML formatado com sucesso!");
+            resultList.getItems().add(
+                new PositionedNode(null, 1, 1, "XML formatado com sucesso!")
+            );
 
         } catch (Exception e) {
             // Mostra erro no ListView
             resultList.getItems().clear();
-            resultList.getItems().add("Erro ao formatar XML: " + e.getMessage());
+            resultList.getItems().add(
+                new PositionedNode(null, 1, 1, "Erro ao formatar XML: " + e.getMessage())
+            );
             e.printStackTrace();
         }
     }
@@ -308,6 +349,13 @@ public class MainController {
                     xmlArea.clearParagraphStyle(paragraph));
             pause.play();
         }
+    }
+
+    public static int toOffset(CodeArea codeArea, int line, int column) {
+        int paragraphIndex = line - 1;
+        int columnIndex = column - 1;
+
+        return codeArea.position(paragraphIndex, columnIndex).toOffset();
     }
 
 }
