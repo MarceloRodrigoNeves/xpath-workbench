@@ -8,6 +8,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.m7sistemas.xpathworkbench.ui.MainController">
@@ -46,8 +48,17 @@
 
     <center>
         <SplitPane>
-        <TextArea fx:id="xmlArea" promptText="Cole o XML aqui..."/>
-        <ListView fx:id="resultList"/>
+            <TextArea fx:id="xmlArea" promptText="Cole o XML aqui..."/>
+            <VBox>
+                <ListView fx:id="resultList" VBox.vgrow="ALWAYS"/>
+                <fx:define>
+                    <ToggleGroup fx:id="resultModeGroup"/>
+                </fx:define>
+                <HBox spacing="5" alignment="CENTER_RIGHT" style="-fx-padding: 5;">
+                    <ToggleButton fx:id="nodeModeButton" text="XML" toggleGroup="$resultModeGroup" onAction="#onExecute" selected="true"/>
+                    <ToggleButton fx:id="textModeButton" text="Texto" toggleGroup="$resultModeGroup" onAction="#onExecute"/>
+                </HBox>
+            </VBox>
         </SplitPane>
     </center>
 

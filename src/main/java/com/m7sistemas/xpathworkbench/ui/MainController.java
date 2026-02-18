@@ -14,6 +14,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import net.sf.saxon.s9api.*;
+import java.io.StringWriter;
+
 
 public class MainController {
 
@@ -29,25 +34,56 @@ public class MainController {
     private final SaxonXPathService xpathService = new SaxonXPathService();
 
     @FXML
+    private ToggleButton textModeButton;
+
+    @FXML
+    private ToggleButton nodeModeButton;
+
+    @FXML
+    private ToggleGroup resultModeGroup;
+
+
+    @FXML
     private void onExecute() {
 
         resultList.getItems().clear();
 
         try {
-            var results = xpathService.evaluate(
+
+            XdmValue results = xpathService.evaluateRaw(
                     xmlArea.getText(),
                     xpathField.getText()
             );
 
-            resultList.getItems().addAll(results);
+            boolean isTextMode = textModeButton.isSelected();
+
+            for (XdmItem item : results) {
+
+                if (isTextMode) {
+                    resultList.getItems().add(item.getStringValue());
+                } else {
+
+                    if (item instanceof XdmNode node) {
+                        resultList.getItems().add(serializeNode(node));
+                    } else {
+                        resultList.getItems().add(item.getStringValue());
+                    }
+
+                }
+            }
 
         } catch (Exception e) {
             resultList.getItems().add("Erro: " + e.getMessage());
         }
     }
 
+
     @FXML
     public void initialize() {
+
+        textModeButton.setToggleGroup(resultModeGroup);
+        nodeModeButton.setToggleGroup(resultModeGroup);
+
         // Atalho de tela 'Ctrl + Enter' para executar
         xpathField.setOnKeyPressed(event -> {
             if (event.isControlDown() && event.getCode() == KeyCode.ENTER) {
@@ -149,5 +185,18 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    private String serializeNode(XdmNode node) throws SaxonApiException {
+
+        Processor processor = new Processor(false);
+        StringWriter writer = new StringWriter();
+
+        Serializer serializer = processor.newSerializer(writer);
+        serializer.setOutputProperty(Serializer.Property.INDENT, "yes");
+        serializer.serializeNode(node);
+
+        return writer.toString();
+    }
+    
 
 }
