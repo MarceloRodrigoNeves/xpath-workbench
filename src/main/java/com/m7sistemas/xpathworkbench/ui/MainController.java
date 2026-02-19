@@ -8,7 +8,6 @@ import com.m7sistemas.xpathworkbench.model.PositionedNode;
 
 import java.util.Collections;
 
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +28,6 @@ import java.util.regex.Pattern;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
-import javafx.util.Duration;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import javafx.scene.layout.VBox;
 
@@ -78,8 +76,6 @@ public class MainController {
                     xmlArea.getText(),
                     xpathField.getText()
             );
-
-            boolean isTextMode = textModeButton.isSelected();
 
             for (XdmItem item : results) {
                 if (item instanceof XdmNode xdmNode) {
@@ -328,27 +324,6 @@ public class MainController {
                 text.length() - lastKwEnd);
 
         xmlArea.setStyleSpans(0, spansBuilder.create());
-    }
-
-    private void highlightNodeInXml(XdmNode node) {
-
-        int line = node.getUnderlyingNode().getLineNumber();
-
-        if (line > 0) {
-
-            int paragraph = line - 1;
-
-            xmlArea.showParagraphAtCenter(paragraph);
-
-            xmlArea.setParagraphStyle(paragraph,
-                    Collections.singleton("highlight-line"));
-
-            // Remove highlight após 2 segundos
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(e ->
-                    xmlArea.clearParagraphStyle(paragraph));
-            pause.play();
-        }
     }
 
     public static int toOffset(CodeArea codeArea, int line, int column) {
